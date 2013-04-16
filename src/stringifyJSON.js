@@ -32,6 +32,9 @@ var stringifyJSON = function (obj) {
                 }
             }
         }
+        if (obj1.length){
+        	stringifier(obj1);
+        }
         return string;
     };
     return stringifier(obj);
