@@ -3,11 +3,11 @@
 
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
-	var string = '';
+var string = '';
     var stringifier = function (obj1){
         if (obj1.length){
             var thisIndex = obj1.shift();
-            if (typeof thisIndex !== "number" && typeof thisIndex !== "string" && typeof thisIndex !== "boolean" && thisIndex !== null && !thisIndex.length){
+            if (typeof thisIndex !== "number" && typeof thisIndex !== "string" && typeof thisIndex !== "boolean" && typeof thisIndex !== "undefined" && thisIndex !== null){
                 stringifier(thisIndex); 
             } else {
                 string += thisIndex + ',';
@@ -22,8 +22,8 @@ var stringifyJSON = function (obj) {
             }
             var key1 = keys.shift();
             var thisObj = obj1[key1];
-            if (typeof thisObj !== "number" && typeof thisObj !== "string" && typeof thisObj !== "boolean" && thisObj !== null && !thisObj.length){
-                  stingifier(thisObj);
+            if (typeof thisObj !== "number" && typeof thisObj !== "string" && typeof thisObj !== "boolean" && typeof thisObj !== "undefined" && thisObj !== null){
+                  stringifier(thisObj);
             } else {
                 string += key1 + ':' + thisObj + ','; 
                 delete obj1[key1];
@@ -33,7 +33,7 @@ var stringifyJSON = function (obj) {
             }
         }
         if (obj1.length){
-        	stringifier(obj1);
+            stringifier(obj1);  
         }
         return string;
     };
