@@ -20,6 +20,27 @@ var string = '';
                 }
             }
             string += ']';
+        } else {
+            var keys = [];
+            for (key in obj1){
+                keys.push(key);  
+            }
+            if (keys.length === 0){
+                string += "{}";
+            } else {
+                string += '{';
+                for (var i = 0; i < keys.length; i ++){
+                    if (typeof obj1[keys[i]] !== "function" && obj1[keys[i]] !== undefined){
+                        stringifier(keys[i]);
+                        string +=':';
+                        stringifier(obj1[keys[i]]);
+                        if (i < keys.length - 1){
+                            string += ','
+                        }
+                    }
+                }
+                string += '}';
+            }
         }
     };
     stringifier(obj);
