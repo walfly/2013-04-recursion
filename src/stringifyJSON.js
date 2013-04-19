@@ -5,37 +5,23 @@
 var stringifyJSON = function (obj) {
 var string = '';
     var stringifier = function (obj1){
-        if (obj1.length){
-            var thisIndex = obj1.shift();
-            if (typeof thisIndex !== "number" && typeof thisIndex !== "string" && typeof thisIndex !== "boolean" && typeof thisIndex !== "undefined" && thisIndex !== null){
-                stringifier(thisIndex); 
-            } else {
-                string += thisIndex + ',';
-                if(obj1.length){
-                    stringifier(obj1);  
+        if ((typeof obj1 === "number"|| typeof obj1 === "boolean" || obj1 === undefined || obj1 === null)){
+            string += obj1;
+        }else if(typeof obj1 === "string"){ 
+            string += "\"" + obj1 + "\"";
+        }else if (obj1.length === 0){
+            string += "[]"
+        }else if (obj1.length){
+            string += '[';
+            for (var i = 0; i < obj1.length; i ++){
+                stringifier(obj1[i]);
+                if (i < obj1.length - 1){
+                    string += ','
                 }
             }
-        } else {
-            var keys = [];
-            for (key in obj1){
-                keys.push(key);  
-            }
-            var key1 = keys.shift();
-            var thisObj = obj1[key1];
-            if (typeof thisObj !== "number" && typeof thisObj !== "string" && typeof thisObj !== "boolean" && typeof thisObj !== "undefined" && thisObj !== null){
-                  stringifier(thisObj);
-            } else {
-                string += key1 + ':' + thisObj + ','; 
-                delete obj1[key1];
-                if (keys.length){
-                    stringifier(obj1);  
-                }
-            }
+            string += ']';
         }
-        if (obj1.length){
-            stringifier(obj1);  
-        }
-        return string;
     };
-    return stringifier(obj);
+    stringifier(obj);
+    return string;
 };
