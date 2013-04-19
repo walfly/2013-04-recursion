@@ -5,5 +5,22 @@
 
 // But in stead we're going to implement it from scratch:
 var getElementsByClassName = function (className) {
-  // your code here
+  var storage = [];
+  var searchNodes = function (nodes) {
+  	for(var i = 0; i < nodes.length; i ++){  		
+	  		if (nodes[i].classList && nodes[i].classList.contains(className)){
+	  			console.log(nodes[i], "second if")
+	  			storage.push(nodes[i]);
+	  		}
+	  		if(nodes[i].childNodes){
+	  			console.log(nodes[i], "first if")
+	  			searchNodes(nodes[i].childNodes);
+	  		}
+
+  	}
+  }
+
+  searchNodes(document.body.childNodes);
+  console.log(storage);
+  return storage;
 };
